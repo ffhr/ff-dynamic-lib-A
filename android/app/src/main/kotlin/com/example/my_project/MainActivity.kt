@@ -1,4 +1,4 @@
-package hr.ff.dynamicliba
+package com.mycompany.dynamicliba
 
 import io.flutter.embedding.android.FlutterActivity
 

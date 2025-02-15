@@ -49,7 +49,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Text(
-            'DynamicLibA v0.0.1',
+            'DynamicLibA v0.0.2',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Inter Tight',
                   color: Colors.white,
@@ -73,7 +73,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   onPressed: () {
                     print('Button pressed ...');
                   },
-                  text: 'Button 0.0.1',
+                  text: 'Button 0.0.2',
                   options: FFButtonOptions(
                     height: 40.0,
                     padding:
