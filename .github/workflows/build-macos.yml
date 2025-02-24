@@ -21,7 +21,9 @@ jobs:
 
       - name: Extract Version from pubspec.yaml
         id: get_version
-        run: echo "VERSION=$(grep 'version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')" >> $GITHUB_ENV
+        run: |
+          VERSION=$(grep 'version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create and Push Git Tag
         run: |
