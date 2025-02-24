@@ -1,0 +1,43 @@
+name: Build Flutter macOS Module
+
+on:
+  push:
+    branches:
+      - release/module-build  # Only trigger builds when pushing to this branch
+
+jobs:
+  tag-and-build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history for tagging
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: stable
+
+      - name: Extract Version from pubspec.yaml
+        id: get_version
+        run: echo "VERSION=$(grep 'version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')" >> $GITHUB_ENV
+
+      - name: Create and Push Git Tag
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git tag v${{ env.VERSION }} -f
+          git push origin v${{ env.VERSION }} --force
+
+      - name: Build macOS Dynamic Library
+        run: |
+          flutter build macos
+          mkdir -p artifacts/macos
+          cp build/macos/Build/Products/Release/*.dylib artifacts/macos/
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-dylib-${{ env.VERSION }}
+          path: artifacts/macos/
